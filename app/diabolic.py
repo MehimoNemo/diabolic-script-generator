@@ -8,6 +8,15 @@ from re import sub
 from base64 import b64encode
 from io import BytesIO
 from PIL import Image
+import os
+import sys
+
+def resource_path(relative_path):
+    if hasattr(sys, "_MEIPASS"):
+        base_path = sys._MEIPASS
+    else:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
 
 SPECIALS = {
     "_": "blank",
@@ -22,13 +31,9 @@ SIZE = 210
 
 
 def read_file(name: str) -> Image:
-    """Args:
-        name (str): The name of the character
+    path = resource_path(os.path.join("assets", name + ".png"))
+    return Image.open(path)
 
-    Returns:
-        Image: The image for the character
-    """
-    return Image.open(join(dirname(__file__), "..", "assets", name + ".png"))
 
 
 def apply_extras(images: List, condition: bool, option_1: int, option_2: int) -> Image:

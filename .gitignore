@@ -2,3 +2,6 @@ venv/
 __pycache__/
 builder/node_modules/
 
+build/
+dist/
+server.spec

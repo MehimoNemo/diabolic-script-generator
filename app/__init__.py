@@ -1,11 +1,21 @@
 """The generator server"""
-
+import os;
+import sys;
 from flask import Flask, render_template, request, jsonify
 from .diabolic import Diabolic
 
+def get_base_path():
+    if hasattr(sys, "_MEIPASS"):
+        return sys._MEIPASS  # PyInstaller temp folder
+    return os.path.abspath(".")
 
-app = Flask(__name__)
+base_path = get_base_path()
 
+app = Flask(
+    __name__,
+    template_folder=os.path.join(base_path, "templates"),
+    static_folder=os.path.join(base_path, "static"),
+)
 
 @app.route("/", methods=["GET", "POST"])
 def index() -> str:
